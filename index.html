@@ -20,11 +20,26 @@
                 </nav>
             </div>
         </header>
+        <main>
+            <section data-bind-id="home_section" data-bind="visible: isActive('Home')">
+                <div class="second_nav_bar">
+                    <button data-bind="click: tabActive.bind(null, 'Accounts'), css: {'button_active': isTabActive('Accounts')}">Accounts</button>
+                    <button data-bind="click: tabActive.bind(null, 'Personal'), css: {'button_active': isTabActive('Personal')}">Personal</button>
+                </div>
+                <div data-bind="visible: isTabActive('Accounts')">
+                    account here
+                </div>
+                <div data-bind="visible: isTabActive('Personal')">
+                    <p> Personal info here</p>
+                </div>
+            </section>
+        </main>
     </div>
     <span data-bind-id="span"></span>
     <script src="scripts/libs/knockout-3.5.1.js"></script>
     <script src="scripts/libs/knockout.validation.js"></script>
     <script src="scripts/viewModels/HeaderViewModel.js"></script>
+    <script src="scripts/viewModels/HomeViewModel.js"></script>
     <script src="scripts/app.js"></script>
 </body>
 </html>

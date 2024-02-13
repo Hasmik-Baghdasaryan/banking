@@ -8,6 +8,7 @@ function HeaderViewModel() {
     self.isPageActive = function(page){
         return self.activePage()=== page;
     }
+    
 }
 
 function initHeaderViewModel () {
