@@ -8,10 +8,23 @@
 </head>
 <body>
     <div class="container">
+        <header data-bind-id="header">
+            <div class="main_nav_bar">
+                <div class="main_title">
+                    <h1> My Bank Account Portal </h1>
+                </div>
+                <nav  class="nav_bar_grid_row">
+                    <a href="#" data-bind="click: setActivePage.bind(null, 'Home'), css: {'active_page': isPageActive('Home')}">Home</a>
+                    <a href="#" data-bind="click: setActivePage.bind(null, 'About'), css: {'active_page': isPageActive('About')}">About</a>
+                    <a href="#" data-bind="click: setActivePage.bind(null, 'Contact'), css: {'active_page': isPageActive('Contact')}">Contact</a>
+                </nav>
+            </div>
+        </header>
     </div>
     <span data-bind-id="span"></span>
     <script src="scripts/libs/knockout-3.5.1.js"></script>
     <script src="scripts/libs/knockout.validation.js"></script>
+    <script src="scripts/viewModels/HeaderViewModel.js"></script>
     <script src="scripts/app.js"></script>
 </body>
 </html>
