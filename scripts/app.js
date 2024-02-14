@@ -2,7 +2,6 @@ var rootModelKO;
 function DocumentRootModelKO(){
     var self = this;
     self.viewModels = ko.observableArray([]);
-
 };
 
 function DocumentRootModelInit() {

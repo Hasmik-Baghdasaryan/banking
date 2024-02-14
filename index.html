@@ -28,7 +28,47 @@
                     <button data-bind="click: tabActive.bind(null, 'Personal'), css: {'button_active': isTabActive('Personal')}">Personal</button>
                 </div>
                 <div data-bind="visible: isTabActive('Accounts')">
-                    account here
+                    <table>
+                        <caption>Summary</caption>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Branch</th>
+                                <th>Account</th>
+                                <th>Type</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: accounts">
+                            <tr>
+                                <td data-bind="text: $index()+1"></td>
+                                <td data-bind="text: accountDetails.branch"></td>
+                                <td data-bind="text: accountDetails.number"></td>
+                                <td data-bind="text: accountDetails.type"></td>
+                                <td data-bind="formatBalanceCurrency: accountDetails.balance"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="">
+                            <tr>
+                                <td data-bind="text: $index()+1"></td>
+                                <td data-bind="text: date"></td>
+                                <td data-bind="text: date"></td>
+                                <td data-bind="text: date"></td>
+                                <td data-bind="text: date"></td>
+                            </tr>
+                        </tbody>
+                    </table> -->
                 </div>
                 <div data-bind="visible: isTabActive('Personal')">
                     <p> Personal info here</p>
@@ -84,6 +124,8 @@
     <script src="scripts/libs/knockout.validation.js"></script>
     <script src="scripts/libs/jquery-3.7.1.min.js"></script>
     <script src="scripts/libs/slick.js"></script>
+    <script src="scripts/serverstub.js"></script>
+    <script src="scripts/common/customBindingsKO.js"></script>
     <script src="scripts/common/carousel.js"></script>
     <script src="scripts/viewModels/HeaderViewModel.js"></script>
     <script src="scripts/viewModels/HomeViewModel.js"></script>
