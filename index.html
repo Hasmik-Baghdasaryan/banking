@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Bank </title>
+    <link rel="stylesheet" href="css/slick.css"/>
     <link rel="stylesheet" href="css/styles.css"/>
 </head>
 <body>
@@ -33,13 +34,61 @@
                     <p> Personal info here</p>
                 </div>
             </section>
+            <section data-bind-id="about_section" data-bind="visible: isActive('About')" class="about_section">
+                <div class="slick-carousel">
+                    <div class="slide-content">
+                        <div>
+                            <h3>Lost your card?</h3>
+                            <p>Report your lost card online and we will send you a new one!</p>
+                            <button>Learn more </button>
+                        </div>
+                    </div>
+                    <div class="slide-content">
+                        <div>
+                            <h3>Make a donation</h3>
+                            <p>Make a donation online through us to your favourite charity.</p>
+                            <button> Donate </button>
+                       </div>
+                    </div>
+                    <div class="slide-content">
+                        <div>
+                            <h3>Open an account online in minutes</h3>
+                             <p>No need to visit a branch! No more waiting in queues!</p>
+                             <button> Sign up </button>
+                        </div>
+                    </div>
+                  </div>
+            </section>
+            <section data-bind-id="contact_section" class="contact_section"  data-bind="foreach: contactDetails, visible: isActive('Contact')">
+                <div class="general_contact_details">
+                    <div class="general_contact_details_title">
+                       <h2 data-bind="text: contactTitle"></h2>
+                    </div>
+                    <div class="general_contact_details_info">
+                        <div>
+                            <p> Call us: <span data-bind="text: phone"></span> </p>
+                            <p data-bind="text: workingHours"></p>
+                        </div>
+                        <div>
+                            <p>Calling from overseas?</p>
+                            <p> Call us: <span data-bind="text: overseasPhone"></span> </p>
+                            <p data-bind="text: overseasWorkingHours"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
     <span data-bind-id="span"></span>
     <script src="scripts/libs/knockout-3.5.1.js"></script>
     <script src="scripts/libs/knockout.validation.js"></script>
+    <script src="scripts/libs/jquery-3.7.1.min.js"></script>
+    <script src="scripts/libs/slick.js"></script>
+    <script src="scripts/common/carousel.js"></script>
     <script src="scripts/viewModels/HeaderViewModel.js"></script>
     <script src="scripts/viewModels/HomeViewModel.js"></script>
+    <script src="scripts/viewModels/AboutViewModel.js"></script>
+    <script src="scripts/viewModels/ContactViewModel.js"></script>
     <script src="scripts/app.js"></script>
 </body>
 </html>

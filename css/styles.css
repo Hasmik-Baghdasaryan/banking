@@ -11,9 +11,9 @@ html {
 
 .container {
     width: 110rem;
-    border: 1px solid #aaa;
+    border: 1px solid #dae7db;
     margin: 6.4rem auto;
-    padding: 1.6rem;
+    padding: 3rem;
 }
 
 .main_nav_bar {
@@ -22,7 +22,7 @@ html {
     align-items: center;
     width: 100%;
     height: 4.7rem;
-    background-color: lightgray;
+    background-color: #47894b;
 
 }
 
@@ -31,6 +31,7 @@ html {
     display: flex;
     align-items: center;
     padding-left: 1.5rem;
+    color: white;
 }
 
 .nav_bar_grid_row {
@@ -41,7 +42,7 @@ html {
 
 a {
     text-decoration: none;
-    color:  #333;
+    color: white;
     font-size: 1.6rem;
     font-weight: 700;
     display: flex;
@@ -63,12 +64,150 @@ button {
     background-color: unset;
     border: 1px solid #333;
     border-radius: 5%;
+    color: #333;
 }
 
 .active_page {
-    color: darkgray;
+    opacity: 0.4;
 }
 
 .button_active {
-    background-color: lightgrey;
+    background-color: #47894b;
+    color: white;
+}
+
+/*contact*/
+
+.contact_section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 3rem;
+    margin-top: 2rem;
+}
+.general_contact_details {
+    border: 1px solid #47894b;
+    border-radius: 0.4rem;
+    display: grid;
+    row-gap: 1rem;
+}
+
+.general_contact_details_title {
+    background-color:#47894b;
+    color: white;
+    padding: 15px;
+}
+
+.general_contact_details_info {
+    display: grid;
+    row-gap: 1rem;
+    margin-left: 1.5rem;
+}
+
+.general_contact_details_info p {
+    font-size: 16px;
+    color: #333;
+    line-height: 2rem;
+}
+
+.general_contact_details_info:last-child{
+    padding-bottom: 5rem;
+}
+
+/*carousel*/
+.slick-slide {
+   position: relative;
+   width: 100%;
+   height: 45rem;
+   margin-top: 30px;
+}
+  .slide-content {
+    width: 100%;
+    height: 40rem;
+    -webkit-box-shadow: -7px -5px 51px -15px rgba(218,231,219,1);
+    -moz-box-shadow: -7px -5px 51px -15px rgba(218,231,219,1);
+    box-shadow: -7px -5px 51px -15px rgba(218,231,219,1);
+  }
+
+  .slide-content div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .slide-content div h3 {
+    font-size: 4rem;
+    color: #47894b;
+    font-weight: 500;
+  }
+
+  .slide-content div p {
+    font-size: 1.5rem;
+    color:  #47894b;
+    opacity: 0.6;
+    font-weight: 400;
+    padding-top: 15px;
+  }
+  .slide-content div button {
+    width: 120px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #dae7db;
+    background-color: unset;
+    margin-top: 15px;
+    color: #47894b;
+  }
+  .slick-prev,
+  .slick-next {
+    color: #dae7db;
+    border: unset;
+    font-size: 3rem;
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+    bottom: 55%;
+    z-index: 1;
+  }
+
+  .slick-next {
+    left: 98%;
+  }
+
+  .slick-dots {
+    list-style: none;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .slick-dots li {
+    display: inline-block;
+  }
+
+  .slick-dots li button {
+    transition: 0.2s background-color ease-in-out 0s;
+        border: none;
+        padding: 0;
+        color: transparent;
+        width: 10px;
+        height: 10px;
+        background-color: #dae7db;
+        margin-right: 10px;
+        border-radius: 50%;
+  }
+
+  .slick-dots li button:hover {
+    background-color: #47894b
+  }
+
+  .slick-dots li.slick-active button {
+     background-color: #47894b;
+  }
+div.slick-track::before{
+    display: block;
+}
+
+.about_section {
+    width: 100%;
 }

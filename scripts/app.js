@@ -19,6 +19,12 @@ function DocumentRootModelInit() {
     if(typeof initHomeViewModel != 'undefined'){
       initHomeViewModel();
     }
+    if(typeof initContactViewModel != 'undefined') {
+      initContactViewModel();
+    }
+    if(typeof initAboutViewModel != 'undefined'){
+      initAboutViewModel();
+    }
   };
   
   window.addEventListener('load', function () {
