@@ -8,4 +8,4 @@ $(window).on('load', function(){
         nextArrow: '<button type="button" class="slick-next"> &gt; </button>',
         prevArrow: '<button type="button" class="slick-prev">&lt;</button>',
       });
-})
+});

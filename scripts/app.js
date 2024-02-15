@@ -9,29 +9,30 @@ function DocumentRootModelInit() {
         rootModelKO = new DocumentRootModelKO();
         initModules();
     }
-  };
+};
   
-  function initModules() {
+function initModules() {
     if(typeof initHeaderViewModel != 'undefined'){
       initHeaderViewModel();
-    }
+    };
     if(typeof initHomeViewModel != 'undefined'){
       initHomeViewModel();
-    }
+    };
     if(typeof initContactViewModel != 'undefined') {
       initContactViewModel();
-    }
+    };
     if(typeof initAboutViewModel != 'undefined'){
       initAboutViewModel();
-    }
-  };
+    };
+};
   
-  window.addEventListener('load', function () {
+window.addEventListener('load', function () {
     //root init
     DocumentRootModelInit();
-  });
+});
 
-  var bindElement = document.querySelector('[data-bind-id="span"]');
+//is it right? there isn't any real element to bind
+var bindElement = document.querySelector('[data-bind-id="span"]');
   if(bindElement){
-    ko.applyBindings(rootModelKO, bindElement)
-  }
+    ko.applyBindings(rootModelKO, bindElement);
+}

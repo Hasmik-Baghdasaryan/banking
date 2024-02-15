@@ -40,7 +40,7 @@
                             </tr>
                         </thead>
                         <tbody data-bind="foreach: accounts">
-                            <tr>
+                            <tr data-bind="click: $parent.selectAccount, css: {'selected_row': $parent.isAccountSelected($data)}">
                                 <td data-bind="text: $index()+1"></td>
                                 <td data-bind="text: accountDetails.branch"></td>
                                 <td data-bind="text: accountDetails.number"></td>
@@ -49,8 +49,12 @@
                             </tr>
                         </tbody>
                     </table>
-                    <!-- <table>
+                    <div  class="error_message hide" data-bind="if: !transactions().length && selectedAccount(), css: {'hide': transactions().length && selectedAccount()}">
+                        <p> There isn't any transaction for this account </p>
+                    </div>
+                    <table class = "hide" data-bind="if: transactions().length, css: {'hide': !transactions().length}">
                         <thead>
+                            <caption>Transactions</caption>
                             <tr>
                                 <th>#</th>
                                 <th>Date</th>
@@ -59,22 +63,22 @@
                                 <th>Amount</th>
                             </tr>
                         </thead>
-                        <tbody data-bind="">
+                        <tbody data-bind="foreach: transactions">
                             <tr>
                                 <td data-bind="text: $index()+1"></td>
                                 <td data-bind="text: date"></td>
-                                <td data-bind="text: date"></td>
-                                <td data-bind="text: date"></td>
-                                <td data-bind="text: date"></td>
+                                <td data-bind="text: description"></td>
+                                <td data-bind="text: category"></td>
+                                <td data-bind="formatBalanceCurrency: amount"></td>
                             </tr>
                         </tbody>
-                    </table> -->
+                    </table>
                 </div>
                 <div data-bind="visible: isTabActive('Personal')">
                     <p> Personal info here</p>
                 </div>
             </section>
-            <section data-bind-id="about_section" data-bind="visible: isActive('About')" class="about_section">
+            <section  class="about_section hide" data-bind-id="about_section" data-bind="if: isActive('About'), css: {'hide': !isActive('About')}">
                 <div class="slick-carousel">
                     <div class="slide-content">
                         <div>
@@ -99,7 +103,7 @@
                     </div>
                   </div>
             </section>
-            <section data-bind-id="contact_section" class="contact_section"  data-bind="foreach: contactDetails, visible: isActive('Contact')">
+            <section class="contact_section hide" data-bind-id="contact_section"  data-bind="foreach: contactDetails, visible: isActive('Contact'), css: {'hide': !isActive('Contact')}">
                 <div class="general_contact_details">
                     <div class="general_contact_details_title">
                        <h2 data-bind="text: contactTitle"></h2>

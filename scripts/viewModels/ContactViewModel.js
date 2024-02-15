@@ -17,7 +17,7 @@ function ContactViewModel(){
             overseasPhone: '+37412 22 22 26',
             overseasWorkingHours: '24 hours a day',
         }
-    ]
+    ];
 };
 
 function initContactViewModel(){

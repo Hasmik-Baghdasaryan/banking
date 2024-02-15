@@ -1,8 +1,7 @@
 var AboutViewModelKO;
 function AboutViewModel(){
     var self = this;
-    self.isActive = HeaderViewModelKO.isPageActive;
-    
+    self.isActive = HeaderViewModelKO.isPageActive;   
 };
 
 function initAboutViewModel(){
