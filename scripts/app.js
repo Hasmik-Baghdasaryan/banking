@@ -18,6 +18,12 @@ function initModules() {
     if(typeof initHomeViewModel != 'undefined'){
       initHomeViewModel();
     };
+    if(typeof initAccountViewModel != 'undefined'){
+      initAccountViewModel();
+    };
+    if(typeof initPersonalInformationViewModel != 'undefined'){
+      initPersonalInformationViewModel();
+    };
     if(typeof initContactViewModel != 'undefined') {
       initContactViewModel();
     };
@@ -31,7 +37,7 @@ window.addEventListener('load', function () {
     DocumentRootModelInit();
 });
 
-//is it right? there isn't any real element to bind
+//is it right? There isn't any real element to bind
 var bindElement = document.querySelector('[data-bind-id="span"]');
   if(bindElement){
     ko.applyBindings(rootModelKO, bindElement);

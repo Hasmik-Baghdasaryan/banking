@@ -1,16 +1,18 @@
 var HeaderViewModelKO;
 function HeaderViewModel() {
     var self = this;
+    var server = ServerStub();
+    self.dataFromServer = server.getMemberData();
     self.activePage = ko.observable("Home");
     
     self.setActivePage = function(page){
         if(page){
-            self.activePage(page);
+            self.activePage(page);        
         }
         //Is checking necessary?
-        if(HomeViewModelKO && HomeViewModelKO.selectedAccount() && HomeViewModelKO.transactions()){
-            HomeViewModelKO.selectedAccount(0);
-            HomeViewModelKO.transactions([]);
+        if(AccountsViewModelKO && AccountsViewModelKO.selectedAccount() && AccountsViewModelKO.transactions()){
+            AccountsViewModelKO.selectedAccount(0);
+            AccountsViewModelKO.transactions([]);
         }
     };
 

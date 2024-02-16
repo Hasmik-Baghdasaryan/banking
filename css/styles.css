@@ -5,7 +5,7 @@
 }
 
 html {
-    font-size: 62.5%;
+    font-size: 72.5%;
     font-family: sans-serif;
 }
 
@@ -265,4 +265,52 @@ caption {
     font-size: 1.6rem;
     font-weight: 400;
     color: darkred;
+}
+
+/*form*/
+form {
+    border: 1px solid #dae7db;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+form h2 {
+    background-color: #dae7db;
+    padding: 10px;
+    color: #47894b;
+    font-size: 2.4rem;
+}
+form h3 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #47894b;
+    padding: 1.2rem 0;
+}
+.form_section,
+.form_address_section_city {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    margin: 1rem 0;
+}
+.form_row {
+    display: flex;
+    flex-direction: column;
+}
+.form_row label {
+    font-size: 1.6rem;
+    font-weight: 700;
+    padding: 0.5rem;
+    color: #47894b;
+}
+.form_row input {
+    height: 4rem;
+    border: 1px solid #dae7db;
+    border-radius: 1rem;
+    padding-left: 1rem;
+}
+.form_address_section_city{
+    grid-template-columns: repeat(2, 65% 32%);
+}
+.form_country {
+    width: 65%;
 }

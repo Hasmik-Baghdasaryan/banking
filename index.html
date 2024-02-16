@@ -22,12 +22,13 @@
             </div>
         </header>
         <main>
-            <section data-bind-id="home_section" data-bind="visible: isActive('Home')">
-                <div class="second_nav_bar">
+            <section>
+                <div class="second_nav_bar" data-bind-id="home_section" data-bind="visible: isActive('Home')">
                     <button data-bind="click: tabActive.bind(null, 'Accounts'), css: {'button_active': isTabActive('Accounts')}">Accounts</button>
                     <button data-bind="click: tabActive.bind(null, 'Personal'), css: {'button_active': isTabActive('Personal')}">Personal</button>
                 </div>
-                <div data-bind="visible: isTabActive('Accounts')">
+                <div data-bind-id="accounts_section" data-bind="visible: showData('Accounts', 'Home')">
+                    <!--Is template binding possible with different row titles-->
                     <table>
                         <caption>Summary</caption>
                         <thead>
@@ -49,7 +50,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div  class="error_message hide" data-bind="if: !transactions().length && selectedAccount(), css: {'hide': transactions().length && selectedAccount()}">
+                    <div class="error_message hide" data-bind="if: !transactions().length && selectedAccount(), css: {'hide': transactions().length && selectedAccount()}">
                         <p> There isn't any transaction for this account </p>
                     </div>
                     <table class = "hide" data-bind="if: transactions().length, css: {'hide': !transactions().length}">
@@ -74,11 +75,56 @@
                         </tbody>
                     </table>
                 </div>
-                <div data-bind="visible: isTabActive('Personal')">
-                    <p> Personal info here</p>
+                <div data-bind-id="personal_information" data-bind="visible: showData('Personal', 'Home')">
+                    <form>
+                        <h2>Personal Information </h2>
+                        <div class="form_section">
+                            <div class="form_row">
+                                <label for="first_name">First Name</label>
+                                <input id="first_name" type="text" data-bind="value: personalInformation.firstName" readonly />
+                            </div>
+                            <div class="form_row">
+                                <label for="last_name">Last Name </label>
+                                <input id="last_name" type="text" data-bind="value: personalInformation.lastName" readonly/>
+                            </div>
+                        </div>
+                        <div class="form_section">
+                            <div class="form_row">
+                                <label for="phone">Phone number</label>
+                                <input id="phone" type="text" data-bind="value: personalInformation.phoneNumber" readonly />
+                            </div>
+                            <div class="form_row">
+                                <label for="email">Email Address </label>
+                                <input id="email" type="text" data-bind="value: personalInformation.emailAddress" readonly/>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>Address</h2>
+                            <div class="form_address_section">
+                                <div class="form_row">
+                                    <label for="street">Street</label>
+                                    <input id="street" type="text" data-bind="value: personalInformation.address.street" readonly/>
+                                </div>
+                                <div class="form_address_section_city">
+                                    <div class="form_row">
+                                        <label for="city">City</label>
+                                        <input id="city" type="text" data-bind="value: personalInformation.address.city" readonly/>
+                                    </div>
+                                    <div class="form_row">
+                                        <label for="post_code">Post code</label>
+                                        <input id="post_code" type="text" data-bind="value: personalInformation.address.postCode" readonly/>
+                                    </div>
+                                </div>
+                                <div class="form_row form_country">
+                                    <label for="country">Country</label>
+                                    <input id="country" type="text" data-bind="value: personalInformation.address.country" readonly/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </section>
-            <section  class="about_section hide" data-bind-id="about_section" data-bind="if: isActive('About'), css: {'hide': !isActive('About')}">
+            <section  class="about_section" data-bind-id="about_section" data-bind="visible: isActive('About')">
                 <div class="slick-carousel">
                     <div class="slide-content">
                         <div>
@@ -101,7 +147,7 @@
                              <button> Sign up </button>
                         </div>
                     </div>
-                  </div>
+                </div>
             </section>
             <section class="contact_section hide" data-bind-id="contact_section"  data-bind="foreach: contactDetails, visible: isActive('Contact'), css: {'hide': !isActive('Contact')}">
                 <div class="general_contact_details">
@@ -133,6 +179,8 @@
     <script src="scripts/common/carousel.js"></script>
     <script src="scripts/viewModels/HeaderViewModel.js"></script>
     <script src="scripts/viewModels/HomeViewModel.js"></script>
+    <script src="scripts/viewModels/AccountsViewModel.js"></script>
+    <script src="scripts/viewModels/PersonalInformationViewModel.js"></script>
     <script src="scripts/viewModels/AboutViewModel.js"></script>
     <script src="scripts/viewModels/ContactViewModel.js"></script>
     <script src="scripts/app.js"></script>
