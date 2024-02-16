@@ -76,26 +76,29 @@
                     </table>
                 </div>
                 <div data-bind-id="personal_information" data-bind="visible: showData('Personal', 'Home')">
-                    <form>
+                    <form data-bind="submit: updatePersonalInfo">
                         <h2>Personal Information </h2>
+                        <div class="message" data-bind="visible: showChangeMessage">
+                            <p> Done!  Personal information updated</p>
+                        </div>
                         <div class="form_section">
                             <div class="form_row">
                                 <label for="first_name">First Name</label>
-                                <input id="first_name" type="text" data-bind="value: personalInformation.firstName" readonly />
+                                <input id="first_name" type="text" data-bind="value: firstName, valueUpdate: 'afterkeydown', enable: editPersonalInformation()"/>
                             </div>
                             <div class="form_row">
                                 <label for="last_name">Last Name </label>
-                                <input id="last_name" type="text" data-bind="value: personalInformation.lastName" readonly/>
+                                <input id="last_name" type="text" data-bind="value: lastName, valueUpdate: 'afterkeydown', enable: editPersonalInformation()" />
                             </div>
                         </div>
                         <div class="form_section">
                             <div class="form_row">
                                 <label for="phone">Phone number</label>
-                                <input id="phone" type="text" data-bind="value: personalInformation.phoneNumber" readonly />
+                                <input id="phone" type="text" data-bind="value: phoneNumber, valueUpdate: 'afterkeydown', enable: editPersonalInformation()"  />
                             </div>
                             <div class="form_row">
                                 <label for="email">Email Address </label>
-                                <input id="email" type="text" data-bind="value: personalInformation.emailAddress" readonly/>
+                                <input id="email" type="text" data-bind="value: emailAddress, valueUpdate: 'afterkeydown', enable: editPersonalInformation()" />
                             </div>
                         </div>
                         <div>
@@ -103,24 +106,26 @@
                             <div class="form_address_section">
                                 <div class="form_row">
                                     <label for="street">Street</label>
-                                    <input id="street" type="text" data-bind="value: personalInformation.address.street" readonly/>
+                                    <input id="street" type="text" data-bind="value: street, valueUpdate: 'afterkeydown', enable: editPersonalInformation()" />
                                 </div>
                                 <div class="form_address_section_city">
                                     <div class="form_row">
                                         <label for="city">City</label>
-                                        <input id="city" type="text" data-bind="value: personalInformation.address.city" readonly/>
+                                        <input id="city" type="text" data-bind="value: city, valueUpdate: 'afterkeydown', enable: editPersonalInformation()" />
                                     </div>
                                     <div class="form_row">
                                         <label for="post_code">Post code</label>
-                                        <input id="post_code" type="text" data-bind="value: personalInformation.address.postCode" readonly/>
+                                        <input id="post_code" type="text" data-bind="value: postCode, valueUpdate: 'afterkeydown', enable: editPersonalInformation()" />
                                     </div>
                                 </div>
                                 <div class="form_row form_country">
                                     <label for="country">Country</label>
-                                    <input id="country" type="text" data-bind="value: personalInformation.address.country" readonly/>
+                                    <input id="country" type="text" data-bind="value: country, valueUpdate: 'afterkeydown', koErrorMessageenable: editPersonalInformation()" />
                                 </div>
                             </div>
                         </div>
+                        <button type="button" data-bind="visible: !editPersonalInformation(), click: enableEditPersonalInfo">Edit</button>
+                        <button type="submit" data-bind="visible: editPersonalInformation, enable: isSubmitBtnEnabled()">Submit</button>
                     </form>
                 </div>
             </section>
@@ -176,6 +181,7 @@
     <script src="scripts/libs/slick.js"></script>
     <script src="scripts/serverstub.js"></script>
     <script src="scripts/common/customBindingsKO.js"></script>
+    <script src="scripts/common/knockoutValidationRules.js"></script>
     <script src="scripts/common/carousel.js"></script>
     <script src="scripts/viewModels/HeaderViewModel.js"></script>
     <script src="scripts/viewModels/HomeViewModel.js"></script>

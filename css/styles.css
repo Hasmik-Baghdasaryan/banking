@@ -314,3 +314,39 @@ form h3 {
 .form_country {
     width: 65%;
 }
+
+form button {
+    width: 120px;
+    height: 40px;
+    background-color: #47894b;
+    border: unset;
+    border-radius: 5px;
+    color: white;
+    margin-top: 15px;
+}
+
+form button:hover, 
+form button:disabled {
+    opacity: 0.4;
+}
+
+form .message {
+    width: 100%;
+    height: 4rem;
+    background-color: #47894b;
+    font-size: 1.8rem;
+    font-weight: 700;
+    padding: 10px;
+    text-align: center;
+    margin: 2rem 0;
+    color: white;
+}
+
+.koErrorMessage {
+    color: #e03131;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+input.koErrorField {
+    border: 1px solid #e03131;
+}
