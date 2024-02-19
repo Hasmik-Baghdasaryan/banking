@@ -30,6 +30,9 @@ function initModules() {
     if(typeof initAboutViewModel != 'undefined'){
       initAboutViewModel();
     };
+    if(typeof TransactionsViewModelKO != 'undefined'){
+      TransactionsViewModelKO();
+    }
 };
   
 window.addEventListener('load', function () {

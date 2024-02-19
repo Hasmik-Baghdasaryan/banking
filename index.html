@@ -26,6 +26,7 @@
                 <div class="second_nav_bar" data-bind-id="home_section" data-bind="visible: isActive('Home')">
                     <button data-bind="click: tabActive.bind(null, 'Accounts'), css: {'button_active': isTabActive('Accounts')}">Accounts</button>
                     <button data-bind="click: tabActive.bind(null, 'Personal'), css: {'button_active': isTabActive('Personal')}">Personal</button>
+                    <button data-bind="click: tabActive.bind(null, 'Transactions'), css: {'button_active': isTabActive('Transactions')}">Transactions</button>
                 </div>
                 <div data-bind-id="accounts_section" data-bind="visible: showData('Accounts', 'Home')">
                     <!--Is template binding possible with different row titles-->
@@ -81,6 +82,9 @@
                         <div class="message" data-bind="visible: showChangeMessage">
                             <p> Done!  Personal information updated</p>
                         </div>
+                        <div class="cancel_message" data-bind="visible: showCancelledMessage">
+                            <p>Cancelled! Edit cancelled and values reverted </p>
+                        </div>
                         <div class="form_section">
                             <div class="form_row">
                                 <label for="first_name">First Name</label>
@@ -120,13 +124,49 @@
                                 </div>
                                 <div class="form_row form_country">
                                     <label for="country">Country</label>
-                                    <input id="country" type="text" data-bind="value: country, valueUpdate: 'afterkeydown', koErrorMessageenable: editPersonalInformation()" />
+                                    <input id="country" type="text" data-bind="value: country, valueUpdate: 'afterkeydown', enable: editPersonalInformation()" />
                                 </div>
                             </div>
                         </div>
                         <button type="button" data-bind="visible: !editPersonalInformation(), click: enableEditPersonalInfo">Edit</button>
+                        <button type="button" data-bind="visible: editPersonalInformation, click: disableEditPersonalInfo"> Cancel</button>
                         <button type="submit" data-bind="visible: editPersonalInformation, enable: isSubmitBtnEnabled()">Submit</button>
                     </form>
+                </div>
+                <div class="transactions" data-bind-id="transactions" data-bind="visible: showData('Transactions', 'Home')">
+                    <div class="message" data-bind="visible: showDoneMessage">
+                        <p> Done, Funds transfered</p>
+                    </div>
+                    <div class="step" data-bind="visible: currentStep()===1" >
+                        <label  for="transfer_from">Transfer from </label>
+                        <select id="transfer_from" data-bind="options: accounts(), optionsText: optionText,
+                        optionsCaption: 'Choose account', optionsValue: 'number', value: transferAccountFrom"></select>
+                        <label for="transfer_to">Transfer to</label>
+                        <select id= "transfer_to" data-bind="options: accounts, optionsText: optionText,
+                        optionsCaption: 'Choose account', optionsValue: 'number', value: transferAccountTo"></select>
+                    </div>
+                    <div class="step" data-bind="visible: currentStep()==2">
+                            <label for="amount">Amount</label>
+                            <input id="amount" type="text" data-bind="value: transferAmount"/>
+                            <label for="description">Description</label>
+                            <input id="description" type="text" data-bind="value: transferDescription"/>
+                    </div>
+                    <div class="step" data-bind="visible:   currentStep()==3">
+                        <p>Account from: <span data-bind="text: transferAccountFrom"></span></p>
+                        <p>Account to: <span data-bind="text: transferAccountTo"></span></p>
+                        <p>Amount: <span data-bind="text: transferAmount"> </span><span>$</span></p>
+                        <p>Description: <span data-bind="text: transferDescription"></span></p>
+                    </div>
+                    <div class="transactions_buttons">
+                        <button data-bind="click: backButton, disable: currentStep()===1">Back</button>
+                        <div>
+                            <div data-bind="css: {'active': currentStep()==1}"></div>
+                            <div data-bind="css: {'active': currentStep()==2}"></div>
+                            <div data-bind="css: {'active': currentStep()==3}"></div>
+                        </div>
+                        <button data-bind="click: nextButton, visible: currentStep()<3, disable: nextButtonDisabled()">Next</button>
+                        <button  data-bind="click: transfer, visible: currentStep()===3">Done</button>
+                    </div>
                 </div>
             </section>
             <section  class="about_section" data-bind-id="about_section" data-bind="visible: isActive('About')">
@@ -187,6 +227,7 @@
     <script src="scripts/viewModels/HomeViewModel.js"></script>
     <script src="scripts/viewModels/AccountsViewModel.js"></script>
     <script src="scripts/viewModels/PersonalInformationViewModel.js"></script>
+    <script src="scripts/viewModels/TransactionsViewModel.js"></script>
     <script src="scripts/viewModels/AboutViewModel.js"></script>
     <script src="scripts/viewModels/ContactViewModel.js"></script>
     <script src="scripts/app.js"></script>

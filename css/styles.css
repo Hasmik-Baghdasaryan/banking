@@ -53,9 +53,9 @@ a {
 }
 
 .second_nav_bar {
-    width: 40%;
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 9rem);
+    grid-template-columns: repeat(3, 11rem);
     margin-top: 30px;
 }
 
@@ -65,7 +65,7 @@ button {
     font-weight: 500;
     padding: 0.3rem;
     background-color: unset;
-    border: 1px solid #333;
+    border: 1px solid #dae7db;
     border-radius: 5%;
     color: #333;
 }
@@ -330,7 +330,9 @@ form button:disabled {
     opacity: 0.4;
 }
 
-form .message {
+form .message,
+form .cancel_message,
+.transactions .message {
     width: 100%;
     height: 4rem;
     background-color: #47894b;
@@ -342,6 +344,11 @@ form .message {
     color: white;
 }
 
+form .cancel_message {
+    background-color: lightyellow;
+    color: #e03131;
+}
+
 .koErrorMessage {
     color: #e03131;
     font-size: 1.1rem;
@@ -349,4 +356,85 @@ form .message {
 }
 input.koErrorField {
     border: 1px solid #e03131;
+}
+
+.transactions {
+    width: 100%;
+    height: 50rem;
+}
+
+.step {
+    width: 80%;
+    height: 30rem;
+    border: 1px solid #dae7db;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.step select,
+.step input {
+    width: 30%;
+    height: 3rem;
+    border: 1px solid #dae7db;
+    border-radius: 5px;
+    margin: 10px;
+    color: #47894b;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.step label {
+    color: #47894b;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.step p {
+    font-size: 1.4rem;
+    padding: 10px;
+}
+
+.transactions_buttons {
+    display: flex;
+    width: 60%;
+    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.transactions_buttons div {
+    display: flex;
+    width: 5%;
+    text-decoration: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.transactions_buttons div div {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #47894b;
+}
+
+.active {
+    opacity: 0.4;
+}
+
+.transactions_buttons button {
+    width: 80px;
+    height: 40px;
+    padding: 5px;
+    background-color: #47894b;
+    color: white;
+    border-radius: 5px;
+}
+
+.transactions_buttons button:disabled {
+    opacity: 0.6;
 }

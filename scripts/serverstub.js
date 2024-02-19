@@ -65,12 +65,12 @@ var ServerStub = function () {
 		transferModel.amount = + transferModel.amount;
 
 		memberData.accounts.forEach(function(account) {
-			if(account.summary.number == transferModel.toAccount.summary.number) {
+			if(account.summary.number == transferModel.toAccount) {
 				account.summary.balance = account.summary.balance + transferModel.amount;
 				account.transactions.push({date: getTodaysDate(), description: transferModel.description, category: "Credit", amount: transferModel.amount});
 			}
 
-			if(account.summary.number == transferModel.fromAccount.summary.number) {
+			if(account.summary.number == transferModel.fromAccount) {
 				account.summary.balance = account.summary.balance - transferModel.amount;
 				account.transactions.push({date: getTodaysDate(), description: transferModel.description, category: "Debit", amount: transferModel.amount});
 			}

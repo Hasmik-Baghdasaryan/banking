@@ -16,7 +16,7 @@ function AccountsViewModel(){
         //why don't 'return self.accounts(accounts)' and foreach binding with this function work?
         return accounts;
     };
-    
+  
     self.accounts(self.getAccountDetails());
    
     self.selectAccount = function(data){

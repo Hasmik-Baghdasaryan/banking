@@ -14,6 +14,11 @@ function HeaderViewModel() {
             AccountsViewModelKO.selectedAccount(0);
             AccountsViewModelKO.transactions([]);
         }
+        if((PersonalInformationViewModelKO && PersonalInformationViewModelKO.showChangeMessage())||
+           (PersonalInformationViewModelKO && PersonalInformationViewModelKO.showCancelledMessage())){
+            PersonalInformationViewModelKO.showChangeMessage(false);
+            PersonalInformationViewModelKO.showCancelledMessage(false);
+        }
     };
 
     self.isPageActive = function(page){
