@@ -2,8 +2,17 @@ var HeaderViewModelKO;
 function HeaderViewModel() {
     var self = this;
     var server = ServerStub();
-    self.dataFromServer = server.getMemberData();
+    self.token = AuthenticationViewModelKO.authenticationToken;
+    self.dataFromServer = ko.observable();
+    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
+    self.user = AuthenticationViewModelKO.user;
+    if(self.token()){
+        self.dataFromServer(server.getMemberData((self.token())));
+    };
     self.activePage = ko.observable("Home");
+    self.logout = AuthenticationViewModelKO.logout;
+    self.logOutMessage = AuthenticationViewModelKO.logOutMessage;
+    self.logOutMod = AuthenticationViewModelKO.logoutMod;
     
     self.setActivePage = function(page){
         if(page){
@@ -19,6 +28,8 @@ function HeaderViewModel() {
             PersonalInformationViewModelKO.showChangeMessage(false);
             PersonalInformationViewModelKO.showCancelledMessage(false);
         }
+        TransactionsViewModelKO.showDoneMessage(false);
+        TransactionsViewModelKO.transferAmount('');
     };
 
     self.isPageActive = function(page){

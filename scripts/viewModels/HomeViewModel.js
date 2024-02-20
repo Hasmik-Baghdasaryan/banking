@@ -4,8 +4,18 @@ function HomeViewModel(){
  
     self.isActive = HeaderViewModelKO.isPageActive; 
     self.activeTab = ko.observable('Accounts');
-       
+    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
+           
     self.tabActive = function(tab){
+        AccountsViewModelKO.selectedAccount('');
+        AccountsViewModelKO.transactions([]);
+        PersonalInformationViewModelKO.editPersonalInformation(false);
+        TransactionsViewModelKO.transferAccountFrom('');
+        TransactionsViewModelKO.transferAccountTo('');
+        TransactionsViewModelKO.transferAmount('');
+        TransactionsViewModelKO.transferDescription('');
+        TransactionsViewModelKO.transferAmount('');
+        TransactionsViewModelKO.showDoneMessage(false);
         if(tab){
             self.activeTab(tab);
         }

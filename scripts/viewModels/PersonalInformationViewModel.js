@@ -3,7 +3,7 @@ function PersonalInformationViewModel(){
     var self = this;
     var server = ServerStub();
     self.info = HeaderViewModelKO.dataFromServer;
-    self.data = ko.observable(self.info);
+    self.data = ko.observable(self.info());
     self.showData = HomeViewModelKO.showData;
     self.personalData = self.data() && self.data().personal ? self.data().personal : null;
     self.showChangeMessage = ko.observable(false);
@@ -93,7 +93,7 @@ function PersonalInformationViewModel(){
     };
 
     self.updatePersonalInfo = function(){
-        server.updatePersonalInformation((self.personalInformation()));
+        server.updatePersonalInformation((self.personalInformation(), AuthenticationViewModelKO.authenticationToken()));
         self.editPersonalInformation(false);
         self.showChangeMessage(true);
     };

@@ -6,10 +6,11 @@ function AccountsViewModel(){
     self.accounts = ko.observableArray([]);
     self.selectedAccount = ko.observable();
     self.transactions = ko.observableArray([]);
+    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
     self.getAccountDetails = function(){
         var accounts = [];
-        if(self.data && self.data.accounts) {
-            self.data.accounts.forEach(function(account){
+        if(self.data() && self.data().accounts) {
+            self.data().accounts.forEach(function(account){
                 accounts.push({accountDetails: account.summary, transactions: account.transactions});
             })
         }
@@ -18,7 +19,7 @@ function AccountsViewModel(){
     };
   
     self.accounts(self.getAccountDetails());
-   
+
     self.selectAccount = function(data){
         if(data) {
             self.transactions(data.transactions);

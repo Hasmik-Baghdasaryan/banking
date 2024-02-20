@@ -9,7 +9,18 @@
 </head>
 <body>
     <div class="container">
-        <header data-bind-id="header">
+        <section class="login" data-bind-id="login" data-bind="ifnot: isAuthenticated">
+            <h1> Please log in</h1>
+            <form data-bind="submit: authenticateUser">
+                <label for="user_name">User name</label>
+                <input type="text" id="user_name" data-bind="value: userName"/>
+                <label for="password">Password</label>
+                <input type="password" id="password" data-bind="value: password"/>
+                <button type="submit" data-bind="disable: isBtnDisabled()">Sign in</button>
+            </form>
+            <p data-bind="visible: errorMessage">Login failed! invalid user name or password</p>
+        </section>
+        <header data-bind-id="header" data-bind="if: isAuthenticated">
             <div class="main_nav_bar">
                 <div class="main_title">
                     <h1> My Bank Account Portal </h1>
@@ -18,19 +29,25 @@
                     <a href="#" data-bind="click: setActivePage.bind(null, 'Home'), css: {'active_page': isPageActive('Home')}">Home</a>
                     <a href="#" data-bind="click: setActivePage.bind(null, 'About'), css: {'active_page': isPageActive('About')}">About</a>
                     <a href="#" data-bind="click: setActivePage.bind(null, 'Contact'), css: {'active_page': isPageActive('Contact')}">Contact</a>
+                    <a href="#"><span data-bind="text: user"></span>
+                        <img src="images/down-arrow.png" data-bind="click: logOutMod"/>
+                    </a>
                 </nav>
+            </div>
+            <div class="logout" data-bind="visible: logOutMessage">
+                <p data-bind="click: logout">logout</p>
             </div>
         </header>
         <main>
             <section>
-                <div class="second_nav_bar" data-bind-id="home_section" data-bind="visible: isActive('Home')">
+                <div class="second_nav_bar" data-bind-id="home_section" data-bind="visible: isActive('Home'), if: isAuthenticated">
                     <button data-bind="click: tabActive.bind(null, 'Accounts'), css: {'button_active': isTabActive('Accounts')}">Accounts</button>
                     <button data-bind="click: tabActive.bind(null, 'Personal'), css: {'button_active': isTabActive('Personal')}">Personal</button>
                     <button data-bind="click: tabActive.bind(null, 'Transactions'), css: {'button_active': isTabActive('Transactions')}">Transactions</button>
                 </div>
                 <div data-bind-id="accounts_section" data-bind="visible: showData('Accounts', 'Home')">
                     <!--Is template binding possible with different row titles-->
-                    <table>
+                    <table data-bind="if: isAuthenticated">
                         <caption>Summary</caption>
                         <thead>
                             <tr>
@@ -137,13 +154,16 @@
                     <div class="message" data-bind="visible: showDoneMessage">
                         <p> Done, Funds transfered</p>
                     </div>
+                    <div class="error_message" data-bind="visible: errorMessage">
+                        <p> Error! Inafficient funds or invalid account! </p>
+                    </div>
                     <div class="step" data-bind="visible: currentStep()===1" >
                         <label  for="transfer_from">Transfer from </label>
                         <select id="transfer_from" data-bind="options: accounts(), optionsText: optionText,
-                        optionsCaption: 'Choose account', optionsValue: 'number', value: transferAccountFrom"></select>
+                        optionsCaption: 'Choose account', value: transferAccountFrom"></select>
                         <label for="transfer_to">Transfer to</label>
                         <select id= "transfer_to" data-bind="options: accounts, optionsText: optionText,
-                        optionsCaption: 'Choose account', optionsValue: 'number', value: transferAccountTo"></select>
+                        optionsCaption: 'Choose account',  value: transferAccountTo"></select>
                     </div>
                     <div class="step" data-bind="visible: currentStep()==2">
                             <label for="amount">Amount</label>
@@ -152,8 +172,8 @@
                             <input id="description" type="text" data-bind="value: transferDescription"/>
                     </div>
                     <div class="step" data-bind="visible:   currentStep()==3">
-                        <p>Account from: <span data-bind="text: transferAccountFrom"></span></p>
-                        <p>Account to: <span data-bind="text: transferAccountTo"></span></p>
+                        <p>Account from: <span data-bind="text: accoutFrom"></span></p>
+                        <p>Account to: <span data-bind="text: accountTo"></span></p>
                         <p>Amount: <span data-bind="text: transferAmount"> </span><span>$</span></p>
                         <p>Description: <span data-bind="text: transferDescription"></span></p>
                     </div>
@@ -165,7 +185,7 @@
                             <div data-bind="css: {'active': currentStep()==3}"></div>
                         </div>
                         <button data-bind="click: nextButton, visible: currentStep()<3, disable: nextButtonDisabled()">Next</button>
-                        <button  data-bind="click: transfer, visible: currentStep()===3">Done</button>
+                        <button  data-bind="click: transfer, visible: currentStep()===3, disable: errorMessage">Done</button>
                     </div>
                 </div>
             </section>
@@ -219,10 +239,12 @@
     <script src="scripts/libs/knockout.validation.js"></script>
     <script src="scripts/libs/jquery-3.7.1.min.js"></script>
     <script src="scripts/libs/slick.js"></script>
+    <script src="scripts/jwt.js"></script>
     <script src="scripts/serverstub.js"></script>
     <script src="scripts/common/customBindingsKO.js"></script>
     <script src="scripts/common/knockoutValidationRules.js"></script>
     <script src="scripts/common/carousel.js"></script>
+    <script src="scripts/viewModels/AuthenticationViewModel.js"></script>
     <script src="scripts/viewModels/HeaderViewModel.js"></script>
     <script src="scripts/viewModels/HomeViewModel.js"></script>
     <script src="scripts/viewModels/AccountsViewModel.js"></script>
