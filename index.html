@@ -1,52 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Bank </title>
-    <link rel="stylesheet" href="css/slick.css"/>
-    <link rel="stylesheet" href="css/styles.css"/>
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
+
 <body>
     <div class="container">
-        <section class="login" data-bind-id="login" data-bind="ifnot: isAuthenticated">
+        <section class="login hide" data-bind-id="login" data-bind="css: {'hide': isAuthenticated}">
+            <!--ko ifnot: isAuthenticated -->
             <h1> Please log in</h1>
-            <form data-bind="submit: authenticateUser">
+            <form class="login_form" data-bind="submit: authenticateUser">
                 <label for="user_name">User name</label>
-                <input type="text" id="user_name" data-bind="value: userName"/>
+                <input type="text" id="user_name" data-bind="value: userName, valueUpdate: 'afterkeydown'" />
                 <label for="password">Password</label>
-                <input type="password" id="password" data-bind="value: password"/>
+                <input type="password" id="password" data-bind="value: password, valueUpdate: 'afterkeydown'" />
                 <button type="submit" data-bind="disable: isBtnDisabled()">Sign in</button>
             </form>
-            <p data-bind="visible: errorMessage">Login failed! invalid user name or password</p>
+            <p data-bind="visible: errorMessage">Login failed! Invalid user name or password</p>
+            <!-- /ko -->
         </section>
-        <header data-bind-id="header" data-bind="if: isAuthenticated">
+        <header class="hide" data-bind-id="header" data-bind="css: {'hide': !isAuthenticated}">
+            <!--ko if: isAuthenticated -->
             <div class="main_nav_bar">
                 <div class="main_title">
                     <h1> My Bank Account Portal </h1>
                 </div>
-                <nav  class="nav_bar_grid_row">
-                    <a href="#" data-bind="click: setActivePage.bind(null, 'Home'), css: {'active_page': isPageActive('Home')}">Home</a>
-                    <a href="#" data-bind="click: setActivePage.bind(null, 'About'), css: {'active_page': isPageActive('About')}">About</a>
-                    <a href="#" data-bind="click: setActivePage.bind(null, 'Contact'), css: {'active_page': isPageActive('Contact')}">Contact</a>
+                <nav class="nav_bar_grid_row">
+                    <a href="#"
+                        data-bind="click: setActivePage.bind(null, 'Home'), css: {'active_page': isPageActive('Home')}">Home</a>
+                    <a href="#"
+                        data-bind="click: setActivePage.bind(null, 'About'), css: {'active_page': isPageActive('About')}">About</a>
+                    <a href="#"
+                        data-bind="click: setActivePage.bind(null, 'Contact'), css: {'active_page': isPageActive('Contact')}">Contact</a>
                     <a href="#"><span data-bind="text: user"></span>
-                        <img src="images/down-arrow.png" data-bind="click: logOutMod"/>
+                        <img src="images/down-arrow.png" data-bind="click: logOutMode" />
                     </a>
                 </nav>
             </div>
             <div class="logout" data-bind="visible: logOutMessage">
-                <p data-bind="click: logout">logout</p>
+                <p data-bind="click: logOut">logout</p>
             </div>
+            <!-- /ko -->
         </header>
         <main>
             <section>
-                <div class="second_nav_bar" data-bind-id="home_section" data-bind="visible: isActive('Home'), if: isAuthenticated">
-                    <button data-bind="click: tabActive.bind(null, 'Accounts'), css: {'button_active': isTabActive('Accounts')}">Accounts</button>
-                    <button data-bind="click: tabActive.bind(null, 'Personal'), css: {'button_active': isTabActive('Personal')}">Personal</button>
-                    <button data-bind="click: tabActive.bind(null, 'Transactions'), css: {'button_active': isTabActive('Transactions')}">Transactions</button>
+                <div class="second_nav_bar hide" data-bind-id="home_section"
+                    data-bind="css: {'hide': !isAuthenticated}, visible: isActive('Home')">
+                    <!--ko if: isAuthenticated -->
+                    <button
+                        data-bind="click: tabActive.bind(null, 'Accounts'), css: {'button_active': isTabActive('Accounts')}">Accounts</button>
+                    <button
+                        data-bind="click: tabActive.bind(null, 'Personal'), css: {'button_active': isTabActive('Personal')}">Personal</button>
+                    <button
+                        data-bind="click: tabActive.bind(null, 'Transactions'), css: {'button_active': isTabActive('Transactions')}">Transactions</button>
+                    <!-- /ko -->
                 </div>
-                <div data-bind-id="accounts_section" data-bind="visible: showData('Accounts', 'Home')">
-                    <!--Is template binding possible with different row titles-->
+                <div class="hide" data-bind-id="accounts_section"
+                    data-bind="if: showData('Accounts', 'Home'), css: {'hide': !isAuthenticated}">
+                    <!--Is template binding possible-->
                     <table data-bind="if: isAuthenticated">
                         <caption>Summary</caption>
                         <thead>
@@ -59,19 +75,21 @@
                             </tr>
                         </thead>
                         <tbody data-bind="foreach: accounts">
-                            <tr data-bind="click: $parent.selectAccount, css: {'selected_row': $parent.isAccountSelected($data)}">
+                            <tr
+                                data-bind="click: $parent.selectAccount, css: {'selected_row': $parent.isAccountSelected($data)}">
                                 <td data-bind="text: $index()+1"></td>
-                                <td data-bind="text: accountDetails.branch"></td>
-                                <td data-bind="text: accountDetails.number"></td>
-                                <td data-bind="text: accountDetails.type"></td>
-                                <td data-bind="formatBalanceCurrency: accountDetails.balance"></td>
+                                <td data-bind="text: summary.branch"></td>
+                                <td data-bind="text: summary.number"></td>
+                                <td data-bind="text: summary.type"></td>
+                                <td data-bind="formatBalanceCurrency: summary.balance"></td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="error_message hide" data-bind="if: !transactions().length && selectedAccount(), css: {'hide': transactions().length && selectedAccount()}">
+                    <div class="error_message"
+                        data-bind="if: showTransactionsMessage, css: {'hide': !showTransactionsMessage()}">
                         <p> There isn't any transaction for this account </p>
                     </div>
-                    <table class = "hide" data-bind="if: transactions().length, css: {'hide': !transactions().length}">
+                    <table class="hide" data-bind="if: transactions().length, css: {'hide': !transactions().length}">
                         <thead>
                             <caption>Transactions</caption>
                             <tr>
@@ -93,11 +111,12 @@
                         </tbody>
                     </table>
                 </div>
-                <div data-bind-id="personal_information" data-bind="visible: showData('Personal', 'Home')">
+                <div class="hide" data-bind-id="personal_information"
+                    data-bind="if: showData('Personal', 'Home'), css: {'hide': !isAuthenticated}">
                     <form data-bind="submit: updatePersonalInfo">
                         <h2>Personal Information </h2>
                         <div class="message" data-bind="visible: showChangeMessage">
-                            <p> Done!  Personal information updated</p>
+                            <p> Done! Personal information updated</p>
                         </div>
                         <div class="cancel_message" data-bind="visible: showCancelledMessage">
                             <p>Cancelled! Edit cancelled and values reverted </p>
@@ -105,91 +124,110 @@
                         <div class="form_section">
                             <div class="form_row">
                                 <label for="first_name">First Name</label>
-                                <input id="first_name" type="text" data-bind="value: firstName, valueUpdate: 'afterkeydown', enable: editPersonalInformation()"/>
+                                <input id="first_name" type="text"
+                                    data-bind="value: firstName, valueUpdate: 'afterkeydown', enable: editPersonalInformation" />
                             </div>
                             <div class="form_row">
                                 <label for="last_name">Last Name </label>
-                                <input id="last_name" type="text" data-bind="value: lastName, valueUpdate: 'afterkeydown', enable: editPersonalInformation()" />
+                                <input id="last_name" type="text"
+                                    data-bind="value: lastName, valueUpdate: 'afterkeydown', enable: editPersonalInformation" />
                             </div>
                         </div>
                         <div class="form_section">
                             <div class="form_row">
                                 <label for="phone">Phone number</label>
-                                <input id="phone" type="text" data-bind="value: phoneNumber, valueUpdate: 'afterkeydown', enable: editPersonalInformation()"  />
+                                <input id="phone" type="text"
+                                    data-bind="value: phoneNumber, valueUpdate: 'afterkeydown', enable: editPersonalInformation" />
                             </div>
                             <div class="form_row">
                                 <label for="email">Email Address </label>
-                                <input id="email" type="text" data-bind="value: emailAddress, valueUpdate: 'afterkeydown', enable: editPersonalInformation()" />
+                                <input id="email" type="text"
+                                    data-bind="value: emailAddress, valueUpdate: 'afterkeydown', enable: editPersonalInformation" />
                             </div>
                         </div>
                         <div>
                             <h3>Address</h2>
-                            <div class="form_address_section">
-                                <div class="form_row">
-                                    <label for="street">Street</label>
-                                    <input id="street" type="text" data-bind="value: street, valueUpdate: 'afterkeydown', enable: editPersonalInformation()" />
-                                </div>
-                                <div class="form_address_section_city">
+                                <div class="form_address_section">
                                     <div class="form_row">
-                                        <label for="city">City</label>
-                                        <input id="city" type="text" data-bind="value: city, valueUpdate: 'afterkeydown', enable: editPersonalInformation()" />
+                                        <label for="street">Street</label>
+                                        <input id="street" type="text"
+                                            data-bind="value: street, valueUpdate: 'afterkeydown', enable: editPersonalInformation" />
                                     </div>
-                                    <div class="form_row">
-                                        <label for="post_code">Post code</label>
-                                        <input id="post_code" type="text" data-bind="value: postCode, valueUpdate: 'afterkeydown', enable: editPersonalInformation()" />
+                                    <div class="form_address_section_city">
+                                        <div class="form_row">
+                                            <label for="city">City</label>
+                                            <input id="city" type="text"
+                                                data-bind="value: city, valueUpdate: 'afterkeydown', enable: editPersonalInformation" />
+                                        </div>
+                                        <div class="form_row">
+                                            <label for="post_code">Post code</label>
+                                            <input id="post_code" type="text"
+                                                data-bind="value: postCode, valueUpdate: 'afterkeydown', enable: editPersonalInformation" />
+                                        </div>
+                                    </div>
+                                    <div class="form_row form_country">
+                                        <label for="country">Country</label>
+                                        <input id="country" type="text"
+                                            data-bind="value: country, valueUpdate: 'afterkeydown', enable: editPersonalInformation" />
                                     </div>
                                 </div>
-                                <div class="form_row form_country">
-                                    <label for="country">Country</label>
-                                    <input id="country" type="text" data-bind="value: country, valueUpdate: 'afterkeydown', enable: editPersonalInformation()" />
-                                </div>
-                            </div>
                         </div>
-                        <button type="button" data-bind="visible: !editPersonalInformation(), click: enableEditPersonalInfo">Edit</button>
-                        <button type="button" data-bind="visible: editPersonalInformation, click: disableEditPersonalInfo"> Cancel</button>
-                        <button type="submit" data-bind="visible: editPersonalInformation, enable: isSubmitBtnEnabled()">Submit</button>
+                        <button type="button"
+                            data-bind="visible: !editPersonalInformation(), click: enableEditPersonalInfo">Edit</button>
+                        <button type="button"
+                            data-bind="visible: editPersonalInformation, click: cancelEditPersonalInfo"> Cancel</button>
+                        <button type="submit"
+                            data-bind="visible: editPersonalInformation, enable: isSubmitBtnEnabled()">Submit</button>
                     </form>
                 </div>
-                <div class="transactions" data-bind-id="transactions" data-bind="visible: showData('Transactions', 'Home')">
-                    <div class="message" data-bind="visible: showDoneMessage">
-                        <p> Done, Funds transfered</p>
-                    </div>
-                    <div class="error_message" data-bind="visible: errorMessage">
-                        <p> Error! Inafficient funds or invalid account! </p>
-                    </div>
-                    <div class="step" data-bind="visible: currentStep()===1" >
-                        <label  for="transfer_from">Transfer from </label>
-                        <select id="transfer_from" data-bind="options: accounts(), optionsText: optionText,
-                        optionsCaption: 'Choose account', value: transferAccountFrom"></select>
-                        <label for="transfer_to">Transfer to</label>
-                        <select id= "transfer_to" data-bind="options: accounts, optionsText: optionText,
-                        optionsCaption: 'Choose account',  value: transferAccountTo"></select>
-                    </div>
-                    <div class="step" data-bind="visible: currentStep()==2">
-                            <label for="amount">Amount</label>
-                            <input id="amount" type="text" data-bind="value: transferAmount"/>
-                            <label for="description">Description</label>
-                            <input id="description" type="text" data-bind="value: transferDescription"/>
-                    </div>
-                    <div class="step" data-bind="visible:   currentStep()==3">
-                        <p>Account from: <span data-bind="text: accoutFrom"></span></p>
-                        <p>Account to: <span data-bind="text: accountTo"></span></p>
-                        <p>Amount: <span data-bind="text: transferAmount"> </span><span>$</span></p>
-                        <p>Description: <span data-bind="text: transferDescription"></span></p>
-                    </div>
-                    <div class="transactions_buttons">
-                        <button data-bind="click: backButton, disable: currentStep()===1">Back</button>
-                        <div>
-                            <div data-bind="css: {'active': currentStep()==1}"></div>
-                            <div data-bind="css: {'active': currentStep()==2}"></div>
-                            <div data-bind="css: {'active': currentStep()==3}"></div>
+                <div class="hide" data-bind-id="transactions"
+                    data-bind="if: showData('Transactions', 'Home'), css: {'hide': !isAuthenticated}">
+                    <div class="transactions">
+                        <div class="message" data-bind="visible: showDoneMessage">
+                            <p> Done, Funds transfered</p>
                         </div>
-                        <button data-bind="click: nextButton, visible: currentStep()<3, disable: nextButtonDisabled()">Next</button>
-                        <button  data-bind="click: transfer, visible: currentStep()===3, disable: errorMessage">Done</button>
+                        <div class="error_message" data-bind="visible: errorMessage">
+                            <p> Error! Insufficient funds or invalid account! </p>
+                        </div>
+                        <div class="step" data-bind="visible: currentStep()===1">
+                            <label for="transfer_from"> Transfer from </label>
+                            <select id="transfer_from" data-bind="options: accounts, optionsText: optionText,
+                        optionsCaption: 'Choose account', value: transferAccountFrom"></select>
+                            <label for="transfer_to">Transfer to</label>
+                            <select id="transfer_to" data-bind="options: accounts, optionsText: optionText,
+                        optionsCaption: 'Choose account',  value: transferAccountTo"></select>
+                        </div>
+                        <div class="step" data-bind="visible: currentStep()==2">
+                            <label for="amount">Amount</label>
+                            <input id="amount" type="text"
+                                data-bind="value: transferAmount, valueUpdate: 'afterkeydown'" />
+                            <label for="description">Description</label>
+                            <input id="description" type="text"
+                                data-bind="value: transferDescription, valueUpdate: 'afterkeydown'" />
+                        </div>
+                        <div class="step" data-bind="visible: currentStep()==3">
+                            <p>Account from: <span data-bind="text: formatAccount(transferAccountFrom())"></span></p>
+                            <p>Account to: <span data-bind="text: formatAccount(transferAccountTo())"></span></p>
+                            <p>Amount: <span data-bind="text: transferAmount"> </span><span>$</span></p>
+                            <p>Description: <span data-bind="text: transferDescription"></span></p>
+                        </div>
+                        <div class="transactions_buttons">
+                            <button data-bind="click: backButton, disable: currentStep()===1">Back</button>
+                            <div>
+                                <div data-bind="css: {'active': currentStep()==1}"></div>
+                                <div data-bind="css: {'active': currentStep()==2}"></div>
+                                <div data-bind="css: {'active': currentStep()==3}"></div>
+                            </div>
+                            <button
+                                data-bind="click: nextButton, visible: currentStep()<3, disable: nextButtonDisabled()">Next</button>
+                            <button
+                                data-bind="click: transfer, visible: currentStep()===3, disable: errorMessage">Done</button>
+                        </div>
                     </div>
                 </div>
             </section>
-            <section  class="about_section" data-bind-id="about_section" data-bind="visible: isActive('About')">
+            <section class="about_section hide" data-bind-id="about_section"
+                data-bind="visible: isActive('About'), css: {'hide': !isAuthenticated}">
                 <div class="slick-carousel">
                     <div class="slide-content">
                         <div>
@@ -203,21 +241,22 @@
                             <h3>Make a donation</h3>
                             <p>Make a donation online through us to your favourite charity.</p>
                             <button> Donate </button>
-                       </div>
+                        </div>
                     </div>
                     <div class="slide-content">
                         <div>
                             <h3>Open an account online in minutes</h3>
-                             <p>No need to visit a branch! No more waiting in queues!</p>
-                             <button> Sign up </button>
+                            <p>No need to visit a branch! No more waiting in queues!</p>
+                            <button> Sign up </button>
                         </div>
                     </div>
                 </div>
             </section>
-            <section class="contact_section hide" data-bind-id="contact_section"  data-bind="foreach: contactDetails, visible: isActive('Contact'), css: {'hide': !isActive('Contact')}">
+            <section class="contact_section hide" data-bind-id="contact_section"
+                data-bind="foreach: contactDetails, visible: isActive('Contact') && isAuthenticated, css: {'hide': !isAuthenticated}">
                 <div class="general_contact_details">
                     <div class="general_contact_details_title">
-                       <h2 data-bind="text: contactTitle"></h2>
+                        <h2 data-bind="text: contactTitle"></h2>
                     </div>
                     <div class="general_contact_details_info">
                         <div>
@@ -254,4 +293,5 @@
     <script src="scripts/viewModels/ContactViewModel.js"></script>
     <script src="scripts/app.js"></script>
 </body>
+
 </html>

@@ -14,7 +14,7 @@ function DocumentRootModelInit() {
 function initModules() {
     if(typeof initAuthenticationViewModel != 'undefined'){
       initAuthenticationViewModel();
-    }
+    };
     if(typeof initHeaderViewModel != 'undefined'){
       initHeaderViewModel();
     };

@@ -1,56 +1,60 @@
 var AuthenticationViewModelKO;
-function AuthenticationViewModel(){
+
+function AuthenticationViewModel() {
     var self = this;
     var server = ServerStub();
-    self.user = ko.observable('');
-    self.userName = ko.observable().extend({required: true});
-    self.userName ('');
 
-    self.password = ko.observable().extend({required: true});
+    self.dataFromServer = ko.observable({});
+    self.user = ko.observable('');
+
+    self.userName = ko.observable().extend({ required: true });
+    self.userName('');
+
+    self.password = ko.observable().extend({ required: true });
     self.password('');
 
     self.errorMessage = ko.observable(false);
-    self.logOutMessage= ko.observable(false);
+    self.logOutMessage = ko.observable(false);
 
-    self.errors = ko.validation.group(self, {deep: true, live: true, observable: true})
+    self.errors = ko.validation.group(self, { deep: true, live: true, observable: true });
 
     self.authenticationToken = ko.observable(sessionStorage.getItem('clientToken') ? sessionStorage.getItem('clientToken') : false);
-    self.authenticateUser = function(){
+
+    self.isAuthenticated = ko.pureComputed(function () {
+        return self.authenticationToken() ? true : false;
+    });
+
+    self.authenticateUser = function () {
+        if (server && server.login && server.login(self.userName(), self.password())) {
             var result = server.login(self.userName(), self.password());
-            if(result) {
-                self.authenticationToken(result);
-                sessionStorage.setItem('clientToken', self.authenticationToken());
-                location.reload();
-            } else {
-                self.errorMessage(true);
-            }      
+            self.authenticationToken(result);
+            sessionStorage.setItem('clientToken', self.authenticationToken());
+            location.reload();
+        } else {
+            self.errorMessage(true);
+        }
     };
-    
-    self.logoutMod = function(){
+
+    self.dataFromServer(self.authenticationToken() && server && server.getMemberData ? server.getMemberData(self.authenticationToken()) : null);
+    self.user(self.authenticationToken() && server && server.validateToken ? server.validateToken(self.authenticationToken()) : null);
+
+    self.logOutMode = function () {
         self.logOutMessage(!self.logOutMessage());
     };
 
-    self.logout = function(){
-        server.logout(self.authenticationToken());
+    self.logOut = function () {
         sessionStorage.clear();
         location.reload();
-    }
-    if(self.authenticationToken()){
-        self.user(server.validateToken(self.authenticationToken()));
-    }
-    
-    self.isBtnDisabled = function(){
-        return self.errors().length ? true : false;
-    }
+    };
 
-    self.isAuthenticated = ko.pureComputed(function(){
-        return self.authenticationToken() ? true : false;
-    });
+    self.isBtnDisabled = function () {
+        return self.errors().length ? true : false;
+    };
 };
 
-function initAuthenticationViewModel(){
-    var bindElement = document.querySelector('[data-bind-id="login"]');  
-    if(bindElement){
+function initAuthenticationViewModel() {
+    var bindElement = document.querySelector('[data-bind-id="login"]');
+    if (bindElement) {
         AuthenticationViewModelKO = new AuthenticationViewModel();
         ko.applyBindings(AuthenticationViewModelKO, bindElement);
     };

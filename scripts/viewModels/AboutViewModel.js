@@ -1,12 +1,13 @@
 var AboutViewModelKO;
-function AboutViewModel(){
+function AboutViewModel() {
     var self = this;
-    self.isActive = HeaderViewModelKO.isPageActive;   
+    self.isActive = HeaderViewModelKO.isPageActive;
+    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
 };
 
-function initAboutViewModel(){
+function initAboutViewModel() {
     var bindElement = document.querySelector('[ data-bind-id="about_section"]');
-    if(bindElement){
+    if (bindElement) {
         AboutViewModelKO = new AboutViewModel();
         ko.applyBindings(AboutViewModelKO, bindElement);
     }

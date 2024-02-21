@@ -1,48 +1,33 @@
 var AccountsViewModelKO;
-function AccountsViewModel(){
+function AccountsViewModel() {
     var self = this;
-    self.data = HeaderViewModelKO.dataFromServer;
+    self.data = AuthenticationViewModelKO.dataFromServer;
+    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
     self.showData = HomeViewModelKO.showData;
-    self.accounts = ko.observableArray([]);
+
+    self.accounts = ko.observableArray(self.data() && self.data().accounts ? self.data().accounts : []);
     self.selectedAccount = ko.observable();
     self.transactions = ko.observableArray([]);
-    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
-    self.getAccountDetails = function(){
-        var accounts = [];
-        if(self.data() && self.data().accounts) {
-            self.data().accounts.forEach(function(account){
-                accounts.push({accountDetails: account.summary, transactions: account.transactions});
-            })
-        }
-        //why don't 'return self.accounts(accounts)' and foreach binding with this function work?
-        return accounts;
-    };
-  
-    self.accounts(self.getAccountDetails());
 
-    self.selectAccount = function(data){
-        if(data) {
+    self.selectAccount = function (data) {
+        if (data && data.transactions && data.summary.number) {
             self.transactions(data.transactions);
-            self.selectedAccount(data.accountDetails.number);
+            self.selectedAccount(data.summary.number);
         }
     };
 
-    self.isAccountSelected = function(data){
-        if(data){
-            return data.accountDetails.number ===  self.selectedAccount();
-        }
+    self.isAccountSelected = function (data) {
+        return data && data.summary && data.summary.number ? data.summary.number === self.selectedAccount() : false;
     };
-   /*  self.hideErrorMessage = function(){
-        return transactions().length && selectedAccount() ? true : false;
+
+    self.showTransactionsMessage = function () {
+        return !self.transactions().length && self.selectedAccount();
     };
-    self.showTransactionsMessage = function(){
-        return !transactions().length && selectedAccount() ? true : false;
-    }; */
 };
 
-function initAccountViewModel () {
+function initAccountViewModel() {
     var bindElement = document.querySelector('[data-bind-id="accounts_section"]');
-    if(bindElement){
+    if (bindElement) {
         AccountsViewModelKO = new AccountsViewModel();
         ko.applyBindings(AccountsViewModelKO, bindElement);
     }

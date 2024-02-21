@@ -1,18 +1,19 @@
 var ContactViewModelKO;
-function ContactViewModel(){
+function ContactViewModel() {
     var self = this;
     self.isActive = HeaderViewModelKO.isPageActive;
+    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
     self.contactDetails = [
         {
             contactTitle: 'General enquiries',
-            phone:  '012 22 22 22',
+            phone: '012 22 22 22',
             workingHours: '24 hours a day',
             overseasPhone: '+37412 22 22 24',
             overseasWorkingHours: '24 hours a day',
         },
         {
             contactTitle: 'Lost or damaged card',
-            phone:  '012 22 22 26',
+            phone: '012 22 22 26',
             workingHours: '24 hours a day',
             overseasPhone: '+37412 22 22 26',
             overseasWorkingHours: '24 hours a day',
@@ -20,9 +21,9 @@ function ContactViewModel(){
     ];
 };
 
-function initContactViewModel(){
+function initContactViewModel() {
     var bindElement = document.querySelector('[data-bind-id="contact_section"]');
-    if(bindElement){
+    if (bindElement) {
         ContactViewModelKO = new ContactViewModel();
         ko.applyBindings(ContactViewModelKO, bindElement);
     }

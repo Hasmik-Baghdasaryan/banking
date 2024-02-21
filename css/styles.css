@@ -12,27 +12,33 @@ html {
 .hide {
     display: none;
 }
+
 .container {
     width: 110rem;
+    height: 100%;
     border: 1px solid #dae7db;
     margin: 6.4rem auto;
     padding: 3rem;
 }
 
+/*login */
 .login {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 40%;
-    margin: 15px auto;
-    padding: 20px;
+    width: 100%;
+}
+
+.login.hide {
+    display: none;
 }
 
 .login h1 {
     font-size: 2.2rem;
     font-weight: 700;
     color: #47894b;
+    margin-top: 1.2rem;
 }
 
 .login p {
@@ -40,13 +46,12 @@ html {
     font-size: 1.4rem;
     font-weight: 700;
 }
-.login form {
-    width: 80%;
+
+.login_form {
+    width: 30%;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    border: unset;
-    
 }
 
 .login form label {
@@ -65,26 +70,28 @@ html {
 .login form button {
     margin: 15px auto;
 }
+
+/*header*/
+
 .main_nav_bar {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 4.7rem;
+    height: 4.8rem;
     background-color: #47894b;
-
 }
 
 .main_title {
-    width: 40%;
+    width: 30%;
     display: flex;
     align-items: center;
-    padding-left: 1.5rem;
+    padding-left: 1.4rem;
     color: white;
 }
 
 .nav_bar_grid_row {
-    width: 60%;
+    width: 70%;
     display: grid;
     grid-template-columns: repeat(4, 1fr)
 }
@@ -95,6 +102,8 @@ a {
     font-size: 1.6rem;
     font-weight: 700;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 a span {
@@ -110,13 +119,14 @@ a img {
 }
 
 .logout p {
-   font-size: 1.4rem;
-   color: #e03131;
-   margin-left:88%;
-   margin-top: 15px;
-   font-weight: 700;
-   cursor: pointer;
+    font-size: 1.4rem;
+    color: #e03131;
+    margin-left: 88%;
+    margin-top: 15px;
+    font-weight: 700;
+    cursor: pointer;
 }
+
 .second_nav_bar {
     width: 100%;
     display: grid;
@@ -152,6 +162,7 @@ button {
     column-gap: 3rem;
     margin-top: 2rem;
 }
+
 .general_contact_details {
     border: 1px solid #47894b;
     border-radius: 0.4rem;
@@ -160,7 +171,7 @@ button {
 }
 
 .general_contact_details_title {
-    background-color:#47894b;
+    background-color: #47894b;
     color: white;
     padding: 15px;
 }
@@ -177,48 +188,50 @@ button {
     line-height: 2rem;
 }
 
-.general_contact_details_info:last-child{
+.general_contact_details_info:last-child {
     padding-bottom: 5rem;
 }
 
 /*carousel*/
 .slick-slide {
-   position: relative;
-   width: 100%;
-   height: 45rem;
-   margin-top: 30px;
+    position: relative;
+    width: 100%;
+    height: 45rem;
+    margin-top: 30px;
 }
-  .slide-content {
+
+.slide-content {
     width: 100%;
     height: 40rem;
-    -webkit-box-shadow: -7px -5px 51px -15px rgba(218,231,219,1);
-    -moz-box-shadow: -7px -5px 51px -15px rgba(218,231,219,1);
-    box-shadow: -7px -5px 51px -15px rgba(218,231,219,1);
-  }
+    -webkit-box-shadow: -7px -5px 51px -15px rgba(218, 231, 219, 1);
+    -moz-box-shadow: -7px -5px 51px -15px rgba(218, 231, 219, 1);
+    box-shadow: -7px -5px 51px -15px rgba(218, 231, 219, 1);
+}
 
-  .slide-content div {
+.slide-content div {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }
+}
 
-  .slide-content div h3 {
+.slide-content div h3 {
     font-size: 4rem;
     color: #47894b;
     font-weight: 500;
-  }
+}
 
-  .slide-content div p {
+.slide-content div p {
     font-size: 1.5rem;
-    color:  #47894b;
+    color: #47894b;
     opacity: 0.6;
     font-weight: 400;
     padding-top: 15px;
-  }
-  .slide-content div button {
+}
+
+.slide-content div button {
     width: 120px;
     height: 40px;
     padding: 10px;
@@ -226,9 +239,10 @@ button {
     background-color: unset;
     margin-top: 15px;
     color: #47894b;
-  }
-  .slick-prev,
-  .slick-next {
+}
+
+.slick-prev,
+.slick-next {
     color: #dae7db;
     border: unset;
     font-size: 3rem;
@@ -237,42 +251,43 @@ button {
     left: 0;
     bottom: 55%;
     z-index: 1;
-  }
+}
 
-  .slick-next {
+.slick-next {
     left: 98%;
-  }
+}
 
-  .slick-dots {
+.slick-dots {
     list-style: none;
     margin: 0 auto;
     text-align: center;
-  }
+}
 
-  .slick-dots li {
+.slick-dots li {
     display: inline-block;
-  }
+}
 
-  .slick-dots li button {
+.slick-dots li button {
     transition: 0.2s background-color ease-in-out 0s;
-        border: none;
-        padding: 0;
-        color: transparent;
-        width: 10px;
-        height: 10px;
-        background-color: #dae7db;
-        margin-right: 10px;
-        border-radius: 50%;
-  }
+    border: none;
+    padding: 0;
+    color: transparent;
+    width: 10px;
+    height: 10px;
+    background-color: #dae7db;
+    margin-right: 10px;
+    border-radius: 50%;
+}
 
-  .slick-dots li button:hover {
+.slick-dots li button:hover {
     background-color: #47894b
-  }
+}
 
-  .slick-dots li.slick-active button {
-     background-color: #47894b;
-  }
-div.slick-track::before{
+.slick-dots li.slick-active button {
+    background-color: #47894b;
+}
+
+div.slick-track::before {
     display: block;
 }
 
@@ -282,11 +297,12 @@ div.slick-track::before{
 
 /* account table*/
 table {
-    width:  100%;
+    width: 100%;
     border-collapse: collapse;
     border: 1px solid #dae7db;
     margin-top: 20px;
 }
+
 tr {
     height: 50px;
     border-bottom: 2px solid #dae7db;
@@ -294,6 +310,7 @@ tr {
     font-weight: 700;
     color: #47894b;
 }
+
 td {
     height: 30px;
     font-size: 1.5rem;
@@ -303,10 +320,12 @@ td {
     padding: 10px;
     color: #333;
 }
+
 tr:hover {
     opacity: 0.6;
     cursor: pointer;
 }
+
 caption {
     width: 100%;
     height: 50px;
@@ -321,11 +340,13 @@ caption {
 .selected_row {
     background-color: #dae7db;
 }
+
 .error_message {
     width: 100%;
     height: 4rem;
     margin-top: 1.3rem;
 }
+
 .error_message p {
     font-size: 1.6rem;
     font-weight: 400;
@@ -338,18 +359,21 @@ form {
     padding: 2rem;
     margin-top: 2rem;
 }
+
 form h2 {
     background-color: #dae7db;
     padding: 10px;
     color: #47894b;
     font-size: 2.4rem;
 }
+
 form h3 {
     font-size: 2.2rem;
     font-weight: 700;
     color: #47894b;
     padding: 1.2rem 0;
 }
+
 .form_section,
 .form_address_section_city {
     display: grid;
@@ -357,25 +381,30 @@ form h3 {
     gap: 3rem;
     margin: 1rem 0;
 }
+
 .form_row {
     display: flex;
     flex-direction: column;
 }
+
 .form_row label {
     font-size: 1.6rem;
     font-weight: 700;
     padding: 0.5rem;
     color: #47894b;
 }
+
 .form_row input {
     height: 4rem;
     border: 1px solid #dae7db;
     border-radius: 1rem;
     padding-left: 1rem;
 }
-.form_address_section_city{
+
+.form_address_section_city {
     grid-template-columns: repeat(2, 65% 32%);
 }
+
 .form_country {
     width: 65%;
 }
@@ -390,7 +419,7 @@ form button {
     margin-top: 15px;
 }
 
-form button:hover, 
+form button:hover,
 form button:disabled {
     opacity: 0.4;
 }
@@ -421,9 +450,12 @@ form .cancel_message,
     font-size: 1.1rem;
     font-weight: 700;
 }
+
 input.koErrorField {
     border: 1px solid #e03131;
 }
+
+/*transactions*/
 
 .transactions {
     width: 100%;
