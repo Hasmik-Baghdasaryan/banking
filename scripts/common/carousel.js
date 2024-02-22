@@ -1,11 +1,24 @@
-$(window).on('load', function () {
-  $('.slick-carousel').slick({
-    arrows: true,
-    dots: true,
-    infinite: false,
-    centerMode: true,
-    fade: true,
-    nextArrow: '<button type="button" class="slick-next"> &gt; </button>',
-    prevArrow: '<button type="button" class="slick-prev">&lt;</button>',
-  });
+$(document).ready(function(){
+  $('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    center: true,
+    singleItem: true,
+    autoHeight: true,
+    autoplay: true,
+    checkVisible: false,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:1
+        },
+        1000:{
+            items:1
+        }
+    }
+  })
 });
+

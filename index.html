@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Bank </title>
-    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="css/owl.theme.default.min.css" />
     <link rel="stylesheet" href="css/styles.css" />
 </head>
 
@@ -228,22 +229,22 @@
             </section>
             <section class="about_section hide" data-bind-id="about_section"
                 data-bind="visible: isActive('About'), css: {'hide': !isAuthenticated}">
-                <div class="slick-carousel">
-                    <div class="slide-content">
+                <div class=" owl-carousel owl-theme">
+                    <div class="item">
                         <div>
                             <h3>Lost your card?</h3>
                             <p>Report your lost card online and we will send you a new one!</p>
                             <button>Learn more </button>
                         </div>
                     </div>
-                    <div class="slide-content">
+                    <div class="item">
                         <div>
                             <h3>Make a donation</h3>
                             <p>Make a donation online through us to your favourite charity.</p>
                             <button> Donate </button>
                         </div>
                     </div>
-                    <div class="slide-content">
+                    <div class="item">
                         <div>
                             <h3>Open an account online in minutes</h3>
                             <p>No need to visit a branch! No more waiting in queues!</p>
@@ -277,7 +278,7 @@
     <script src="scripts/libs/knockout-3.5.1.js"></script>
     <script src="scripts/libs/knockout.validation.js"></script>
     <script src="scripts/libs/jquery-3.7.1.min.js"></script>
-    <script src="scripts/libs/slick.js"></script>
+    <script src="scripts/libs/owl.carousel.min.js"></script>
     <script src="scripts/jwt.js"></script>
     <script src="scripts/serverstub.js"></script>
     <script src="scripts/common/customBindingsKO.js"></script>
