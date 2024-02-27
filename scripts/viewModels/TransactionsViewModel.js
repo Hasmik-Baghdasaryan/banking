@@ -9,6 +9,7 @@ function TransactionsViewModel() {
         thirdStep: 3,
     };
 
+    self.token = HeaderViewModelKO.authenticationToken;
     self.data = PersonalInformationViewModelKO.data;
     self.showData = HomeViewModelKO.showData;
 
@@ -97,8 +98,8 @@ function TransactionsViewModel() {
             description: self.transferDescription(),
         };
         if (self.transferAccountFrom().balance >= self.transferAmount() && self.transferAccountFrom().number != self.transferAccountTo().number) {
-            server.transferFunds(transferData, AuthenticationViewModelKO.authenticationToken());
-            var accounts = (server.getAccounts(AuthenticationViewModelKO.authenticationToken()));
+            server.transferFunds(transferData, self.token());
+            var accounts = (server.getAccounts(self.token()));
             AccountsViewModelKO.accounts(accounts);
             self.doneMessage('Done, Funds transfered');
             self.currentStep(1);
