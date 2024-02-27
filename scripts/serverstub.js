@@ -93,7 +93,6 @@ var ServerStub = function () {
 				return memberData[i].data;
 			}
 		}
-		
 		return null;
 	};
 	

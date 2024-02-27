@@ -1,12 +1,21 @@
 var AccountsViewModelKO;
 function AccountsViewModel() {
     var self = this;
-    self.data = AuthenticationViewModelKO.dataFromServer;
-    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
+    var server = ServerStub();
+    
+    self.authenticationToken = HeaderViewModelKO.authenticationToken;
     self.showData = HomeViewModelKO.showData;
 
-    self.accounts = ko.observableArray(self.data() && self.data().accounts ? self.data().accounts : []);
-    self.selectedAccount = ko.observable();
+    self.accounts = ko.observableArray([]);
+    self.accountsInformation = ko.computed(function(){
+        var accountsArray = [];
+        if(self.authenticationToken() && server && server.getMemberData) {
+            accountsArray = (server.getMemberData(self.authenticationToken())).accounts;
+        }
+        return self.accounts(accountsArray);
+    });
+    
+    self.selectedAccount = ko.observable('');
     self.transactions = ko.observableArray([]);
 
     self.selectAccount = function (data) {
@@ -21,7 +30,9 @@ function AccountsViewModel() {
     };
 
     self.showTransactionsMessage = function () {
-        return !self.transactions().length && self.selectedAccount();
+        if( !self.transactions().length && self.selectedAccount()){
+            return "There isn't any transaction for this account"
+        }
     };
 };
 

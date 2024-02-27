@@ -1,19 +1,22 @@
 var HeaderViewModelKO;
 function HeaderViewModel() {
     var self = this;
-    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
-    self.user = AuthenticationViewModelKO.user;
-    self.logOut = AuthenticationViewModelKO.logOut;
-    self.logOutMessage = AuthenticationViewModelKO.logOutMessage;
-    self.logOutMode = AuthenticationViewModelKO.logOutMode;
+    var server = ServerStub();
+    
+    self.authenticationToken = ko.observable(getItemFromSessionStorage('clientToken') ? getItemFromSessionStorage('clientToken') : false);
+    
+    self.user = ko.observable('');
+    self.getUserName = ko.computed(function(){
+        return self.user(self.authenticationToken() && server && server.validateToken ? server.validateToken(self.authenticationToken()) : '');
+    });
 
+    self.logOutMessage = ko.observable(false);
+   
     self.activePage = ko.observable("Home");
-
     self.setActivePage = function (page) {
-        if (page) {
+        if (page && self.authenticationToken()) {
             self.activePage(page);
         }
-        //Is checking necessary?
         if (AccountsViewModelKO && AccountsViewModelKO.selectedAccount() && AccountsViewModelKO.transactions()) {
             AccountsViewModelKO.selectedAccount(0);
             AccountsViewModelKO.transactions([]);
@@ -31,9 +34,18 @@ function HeaderViewModel() {
     };
 
     self.isPageActive = function (page) {
-        if (page) {
-            return self.activePage() === page;
+        if(self.authenticationToken()){
+            return page ? self.activePage() === page : false;
         }
+    };
+
+    self.logOutMode = function () {
+        self.logOutMessage(!self.logOutMessage());
+    };
+
+    self.logOut = function () {
+        removeItemFromSessionStorage('clientToken');
+        location.replace(baseUrl+'index.html')
     };
 }
 

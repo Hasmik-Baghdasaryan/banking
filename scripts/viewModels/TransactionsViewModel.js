@@ -3,12 +3,17 @@ function TransactionsViewModel() {
     var self = this;
     var server = ServerStub();
 
-    self.data = AuthenticationViewModelKO.dataFromServer;
-    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
+    var transactionsSteps = {
+        firstStep: 1,
+        secondStep: 2,
+        thirdStep: 3,
+    };
+
+    self.data = PersonalInformationViewModelKO.data;
     self.showData = HomeViewModelKO.showData;
 
-    self.showDoneMessage = ko.observable(false);
-    self.errorMessage = ko.observable(false);
+    self.doneMessage = ko.observable('');
+    self.errorMessage = ko.observable('');
     self.accounts = ko.observableArray([]);
     self.currentStep = ko.observable(1);
 
@@ -43,28 +48,45 @@ function TransactionsViewModel() {
     };
 
     self.nextButton = function () {
-        if (self.currentStep() < 3) {
-            (self.currentStep(self.currentStep() + 1));
-        }
+        switch (self.currentStep()) {
+            case transactionsSteps.firstStep:
+                self.currentStep(transactionsSteps.secondStep);
+                break;
+            case transactionsSteps.secondStep:
+                self.currentStep(transactionsSteps.thirdStep);
+                break;
+            default:
+                self.currentStep(transactionsSteps.firstStep);
+        };
     };
 
+    self.stepVisibility = function(step){
+        return self.currentStep() === transactionsSteps[step];
+    };
+    
     self.nextButtonDisabled = function () {
-        if (self.currentStep() === 1 && self.errors().length > 2 || self.currentStep() === 2 && self.errors().length) {
-            return true;
-        }
+        if((self.currentStep() === transactionsSteps.firstStep && (!self.transferAccountFrom.isValid() || !self.transferAccountTo.isValid())) || 
+            (self.currentStep() === transactionsSteps.secondStep && self.errors().length)) {
+                return true;
+        };
     };
 
     self.backButton = function () {
-        if (self.currentStep() > 1) {
+        if (self.currentStep() > transactionsSteps.firstStep) {
             self.currentStep(self.currentStep() - 1);
         }
-        self.errorMessage(false);
+        self.errorMessage('');
     };
 
     self.formatAccount = function (account) {
         if (account) {
             return account.type + ' ' + account.number;
         }
+    };
+   
+    self.nextAndDonebuttonVisibility = function(){
+        var length = Object.keys(transactionsSteps).length;
+        return self.currentStep()< length ? true : false;
     };
 
     self.transfer = function () {
@@ -78,15 +100,23 @@ function TransactionsViewModel() {
             server.transferFunds(transferData, AuthenticationViewModelKO.authenticationToken());
             var accounts = (server.getAccounts(AuthenticationViewModelKO.authenticationToken()));
             AccountsViewModelKO.accounts(accounts);
-            self.showDoneMessage(true);
+            self.doneMessage('Done, Funds transfered');
             self.currentStep(1);
         } else {
-            self.errorMessage(true);
+            self.errorMessage('Error! Insufficient funds or invalid account!');
         }
         self.transferAccountFrom('');
         self.transferAccountTo('');
         self.transferAmount('');
         self.transferDescription('');
+    };
+
+    self.showDoneMessage = function(){
+        return self.doneMessage() ? self.doneMessage() : '';
+    };
+
+    self.showErrorMessage = function(){
+        return self.errorMessage() ? self.errorMessage() : '';
     };
 };
 

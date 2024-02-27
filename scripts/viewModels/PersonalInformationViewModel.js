@@ -4,14 +4,14 @@ function PersonalInformationViewModel() {
     var server = ServerStub();
 
     self.showData = HomeViewModelKO.showData;
-    self.data = AuthenticationViewModelKO.dataFromServer;
-    self.token = AuthenticationViewModelKO.authenticationToken;
-    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
-
+    self.token = HeaderViewModelKO.authenticationToken;
+    self.data = ko.observable((self.token() && server && server.getMemberData ? server.getMemberData(self.token()) : null));
+   
     self.personalData = self.data() && self.data().personal ? self.data().personal : null;
     self.showChangeMessage = ko.observable(false);
     self.showCancelledMessage = ko.observable(false);
-    self.editPersonalInformation = ko.observable(false);
+    self.isPersonalInfoEditMode = ko.observable(false);
+    self.temporaryInfo = ko.observable({});
 
     self.firstName = ko.observable().extend({ required: true, ifOnlyText: self.firstName });
     self.firstName(self.personalData && self.personalData.firstName ? self.personalData.firstName : '');
@@ -37,18 +37,6 @@ function PersonalInformationViewModel() {
     self.postCode = ko.observable().extend({ required: true, ifOnlyDigits: self.postCode, maxLength: 4 });
     self.postCode((self.personalData && self.personalData.address.postCode ? self.personalData.address.postCode : ''));
 
-    //any better way ?
-    self.temporaryInformation = {
-        firstNameTemp: '',
-        lastNameTemp: '',
-        phoneNumberTemp: '',
-        emailAddressTemp: '',
-        cityTemp: '',
-        countryTemp: '',
-        streetTemp: '',
-        postCodeTemp: '',
-    };
-
     self.personalInformation = function () {
         return {
             firstName: self.firstName(),
@@ -61,43 +49,51 @@ function PersonalInformationViewModel() {
                 city: self.city(),
                 country: self.country(),
                 street: self.street(),
-                postCode: self.postCode()
+                postCode: self.postCode(),
             },
         };
     };
+    
+    self.createTemporaryInfo = function(information){
+        return self.temporaryInfo({
+            firstName: information.firstName,
+            lastName: information.lastName,
+            phoneNumber: information.contactDetails.phoneNumber,
+            emailAddress: information.contactDetails.emailAddress,
+            city: information.address.city,
+            country: information.address.country,
+            street: information.address.street,
+            postCode: information.address.postCode,
+        });
+    };
+    
+    self.cancelInfoUpdate = function(){
+            self.firstName(self.temporaryInfo().firstName || ''),
+            self.lastName(self.temporaryInfo().lastName || ''),
+            self.phoneNumber(self.temporaryInfo().phoneNumber || ''),
+            self.emailAddress(self.temporaryInfo().emailAddress || ''),
+            self.city(self.temporaryInfo().city || ''),
+            self.country(self.temporaryInfo().country || ''),
+            self.street(self.temporaryInfo().street || ''),
+            self.postCode(self.temporaryInfo().postCode || '')
+    };
 
     self.enableEditPersonalInfo = function () {
-        //any better way?
-        self.temporaryInformation.firstNameTemp = self.firstName();
-        self.temporaryInformation.lastNameTemp = self.lastName();
-        self.temporaryInformation.phoneNumberTemp = self.phoneNumber();
-        self.temporaryInformation.emailAddressTemp = self.emailAddress();
-        self.temporaryInformation.cityTemp = self.city();
-        self.temporaryInformation.countryTemp = self.country();
-        self.temporaryInformation.streetTemp = self.street();
-        self.temporaryInformation.postCodeTemp = self.postCode();
+        self.createTemporaryInfo(self.personalInformation());
         self.showCancelledMessage(false);
-        self.editPersonalInformation(true);
+        self.isPersonalInfoEditMode(true);
     };
 
     self.cancelEditPersonalInfo = function () {
-        self.editPersonalInformation(false);
+        self.isPersonalInfoEditMode(false);
         self.showChangeMessage(false);
         self.showCancelledMessage(true);
-        //any better way?
-        self.firstName(self.temporaryInformation.firstNameTemp || '');
-        self.lastName(self.temporaryInformation.lastNameTemp || '');
-        self.phoneNumber(self.temporaryInformation.phoneNumberTemp || '');
-        self.emailAddress(self.temporaryInformation.emailAddressTemp || '');
-        self.city(self.temporaryInformation.cityTemp || '');
-        self.country(self.temporaryInformation.countryTemp || '');
-        self.street(self.temporaryInformation.streetTemp || '');
-        self.postCode(self.temporaryInformation.postCodeTemp || '');
+        self.cancelInfoUpdate();
     };
 
     self.updatePersonalInfo = function () {
         server.updatePersonalInformation(self.personalInformation(), self.token());
-        self.editPersonalInformation(false);
+        self.isPersonalInfoEditMode(false);
         self.showChangeMessage(true);
     };
 

@@ -42,9 +42,3 @@ window.addEventListener('load', function () {
     //root init
     DocumentRootModelInit();
 });
-
-//is it right? There isn't any real element to bind
-var bindElement = document.querySelector('[data-bind-id="span"]');
-  if(bindElement){
-    ko.applyBindings(rootModelKO, bindElement);
-}

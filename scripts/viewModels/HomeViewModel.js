@@ -3,7 +3,7 @@ function HomeViewModel() {
     var self = this;
 
     self.isActive = HeaderViewModelKO.isPageActive;
-    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
+    self.authenticationToken = HeaderViewModelKO.authenticationToken;
     self.activeTab = ko.observable('Accounts');
 
     self.tabActive = function (tab) {
@@ -33,8 +33,10 @@ function HomeViewModel() {
         return tab ? self.activeTab() === tab : null;
     };
 
-    self.showData = function (tab, page) {
-        return (self.isTabActive(tab) && self.isActive(page)) ? true : false
+    self.showData = function (tab) {
+        if (self.isActive("Home") && self.authenticationToken()) {
+            return self.isTabActive(tab);
+        }
     };
 };
 

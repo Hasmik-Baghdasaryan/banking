@@ -2,7 +2,7 @@ var ContactViewModelKO;
 function ContactViewModel() {
     var self = this;
     self.isActive = HeaderViewModelKO.isPageActive;
-    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
+
     self.contactDetails = [
         {
             contactTitle: 'General enquiries',

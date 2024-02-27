@@ -2,7 +2,6 @@ var AboutViewModelKO;
 function AboutViewModel() {
     var self = this;
     self.isActive = HeaderViewModelKO.isPageActive;
-    self.isAuthenticated = AuthenticationViewModelKO.isAuthenticated;
 };
 
 function initAboutViewModel() {
